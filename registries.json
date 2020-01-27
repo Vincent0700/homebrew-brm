@@ -1,0 +1,24 @@
+{
+    "official": {
+        "brew": "https://github.com/Homebrew/brew.git",
+        "homebrew/core": "https://github.com/Homebrew/homebrew-core.git",
+        "homebrew/cask": "https://github.com/Homebrew/homebrew-cask.git"
+    },
+    "tsinghua": {
+        "brew": "https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/brew.git",
+        "homebrew/core": "https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-core.git",
+        "homebrew/cask": "https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-cask.git",
+        "homebrew/bottles": "https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles"
+    },
+    "aliyun": {
+        "brew": "https://mirrors.aliyun.com/homebrew/brew.git",
+        "homebrew/core": "https://mirrors.aliyun.com/homebrew/homebrew-core.git",
+        "homebrew/bottles": "https://mirrors.aliyun.com/homebrew/homebrew-bottles"
+    },
+    "ustc": {
+        "brew": "https://mirrors.ustc.edu.cn/brew.git",
+        "homebrew/core": "https://mirrors.ustc.edu.cn/homebrew-core.git",
+        "homebrew/cask": "https://mirrors.ustc.edu.cn/homebrew-cask.git",
+        "homebrew/bottles": "https://mirrors.ustc.edu.cn/homebrew-bottles"
+    }
+}
