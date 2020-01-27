@@ -200,13 +200,9 @@ function _setRegistry(name, url) {
       let arr = content.split('\n');
       let deleteIndicies = [];
       for (let i = 0; i < arr.length; ++i) {
-        if (arr[i].match(/export[\s]+HOMEBREW_BOTTLE_DOMAIN=[^\S]*/)) {
-          deleteIndicies.push(i);
-        }
+        if (arr[i].match(/export[\s]+HOMEBREW_BOTTLE_DOMAIN=[^\S]*/)) deleteIndicies.push(i);
       }
-      deleteIndicies.reverse().forEach((index) => {
-        arr.splice(index, 1);
-      });
+      deleteIndicies.reverse().forEach((index) => arr.splice(index, 1));
       content = arr.join('\n');
       content = content.trimRight('\n');
       content += `\n\nexport HOMEBREW_BOTTLE_DOMAIN=${url}`;

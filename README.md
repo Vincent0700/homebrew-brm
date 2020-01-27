@@ -1,5 +1,11 @@
 # brm -- Homebrew registry manager
 
+[![NPM](https://nodei.co/npm/homebrew-brm.png?downloads=true&downloadRank=true)](https://www.npmjs.com/package/homebrew-brm)
+
+[![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/vincent0700/homebrew-brm/blob/master/LICENSE)
+[![npm](https://img.shields.io/npm/v/tail.svg?style=plastic)](https://www.npmjs.com/package/homebrew-brm)
+![npm](https://img.shields.io/npm/dm/homebrew-brm.svg)
+
 brm can help you easy and fast switch between different Homebrew registries, now include: official, tsinghua, aliyun, ustc.
 
 ## Install
@@ -34,6 +40,8 @@ Commands:
 
 ## Example
 
+### List all the registries
+
 ```
 $ brm ls
 ┌──────────┬───┬──────────────────┬─────────────────────────────────────────────────────────────────────┐
@@ -67,6 +75,8 @@ $ brm ls
 └──────────┴───┴──────────────────┴─────────────────────────────────────────────────────────────────────┘
 ```
 
+### Change homebrew registry
+
 ```
 $ brm use tsinghua
 ? Select registry brew, homebrew/core, homebrew/cask, homebrew/bottles
@@ -86,6 +96,8 @@ Set homebrew/bottles registry to https://mirrors.tuna.tsinghua.edu.cn/homebrew-b
 Updating registries... Press [CTRL+C] to stop.
 Already up-to-date.
 ```
+
+### Show current registry and URL
 
 ```
 $ brm current
