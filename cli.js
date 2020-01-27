@@ -97,7 +97,6 @@ function onUse(name) {
       arr.forEach((item) => {
         _setRegistry(item, registries[name][item]);
       });
-      showCurrent();
       console.log(`Updating registries... Press ${'[CTRL+C]'.bold} to stop.`);
       shell.exec('brew update');
     });

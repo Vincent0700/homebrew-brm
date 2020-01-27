@@ -84,15 +84,6 @@ Set brew registry to https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/brew.git
 Set homebrew/core registry to https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-core.git
 Set homebrew/cask registry to https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-cask.git
 Set homebrew/bottles registry to https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles
-┌──────────────────┬──────────┬─────────────────────────────────────────────────────────────────────┐
-│ brew             │ tsinghua │ https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/brew.git          │
-├──────────────────┼──────────┼─────────────────────────────────────────────────────────────────────┤
-│ homebrew/core    │ tsinghua │ https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-core.git │
-├──────────────────┼──────────┼─────────────────────────────────────────────────────────────────────┤
-│ homebrew/cask    │ tsinghua │ https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-cask.git │
-├──────────────────┼──────────┼─────────────────────────────────────────────────────────────────────┤
-│ homebrew/bottles │ tsinghua │ https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles               │
-└──────────────────┴──────────┴─────────────────────────────────────────────────────────────────────┘
 Updating registries... Press [CTRL+C] to stop.
 Already up-to-date.
 ```
