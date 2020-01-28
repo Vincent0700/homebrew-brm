@@ -1,5 +1,12 @@
 #!/usr/bin/env node
 
+/**
+ * brm (Homebrew Registry Manager)
+ * @description https://github.com/Vincent0700/homebrew-brm/blob/master/README.md
+ * @author vincent0700 (https://vincentstudio.info)
+ * @email wang.yuanqiu007@gmail.com
+ */
+
 require('colors');
 const fs = require('fs');
 const path = require('path');
@@ -49,18 +56,20 @@ program.parse(process.argv);
 function showList() {
   const table = new Table();
   const urls = _getCurrentRegistries();
+  const obj = ['brew', 'homebrew/core', 'homebrew/cask', 'homebrew/bottles'];
+  table.push(['', ...obj]);
   for (let name in registries) {
     const registry = registries[name];
-    let fistLine = true;
+    const arr = [...Array(obj.length)].map(() => '');
     for (let item in registry) {
       const url = registry[item];
-      const arr = [];
-      arr.push(fistLine ? name.yellow : '');
-      arr.push(url.trim() === urls[item].trim() ? '*' : '');
-      arr.push(item.brightCyan, url);
-      table.push(arr);
-      fistLine = false;
+      const flag = url.trim() === urls[item].trim();
+      const index = obj.indexOf(item.trim());
+      if (index > 0 && index < arr.length) {
+        arr[index] = flag ? item.bold.brightCyan : item;
+      }
     }
+    table.push([name.yellow, ...arr]);
   }
   console.log(table.toString());
 }

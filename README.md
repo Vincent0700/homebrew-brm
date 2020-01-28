@@ -1,4 +1,4 @@
-# brm -- Homebrew registry manager
+# BRM (Homebrew Registry Manager)
 
 [![NPM](https://nodei.co/npm/homebrew-brm.png?downloads=true&downloadRank=true)](https://www.npmjs.com/package/homebrew-brm)
 
