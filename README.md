@@ -4,7 +4,7 @@
 
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/vincent0700/homebrew-brm/blob/master/LICENSE)
 [![npm](https://img.shields.io/npm/v/tail.svg?style=plastic)](https://www.npmjs.com/package/homebrew-brm)
-![npm](https://img.shields.io/npm/dm/homebrew-brm.svg)
+[![npm](https://img.shields.io/npm/dm/homebrew-brm.svg)](https://www.npmjs.com/package/homebrew-brm)
 
 brm can help you easy and fast switch between different Homebrew registries, now include: official, tsinghua, aliyun, ustc.
 
