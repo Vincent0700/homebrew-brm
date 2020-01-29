@@ -51,7 +51,7 @@ $ brm ls
 ├──────────┼──────────────────┼──────────────────┼──────────────────┼──────────────────┤
 │ tsinghua │        ✔         │        ✔         │       Use        │        ✔         │
 ├──────────┼──────────────────┼──────────────────┼──────────────────┼──────────────────┤
-│ aliyun   │       Use        │       Use        │        ✖         │       Use        │
+│ aliyun   │       Use        │       Use        │        ✘         │       Use        │
 ├──────────┼──────────────────┼──────────────────┼──────────────────┼──────────────────┤
 │ ustc     │        ✔         │        ✔         │        ✔         │        ✔         │
 └──────────┴──────────────────┴──────────────────┴──────────────────┴──────────────────┘
@@ -73,7 +73,7 @@ $ brm use aliyun
 [BRM] Set brew registry to https://mirrors.aliyun.com/homebrew/brew.git
 [BRM] Set homebrew/core registry to https://mirrors.aliyun.com/homebrew/homebrew-core.git
 [BRM] Set homebrew/bottles registry to https://mirrors.aliyun.com/homebrew/homebrew-bottles
-[BRM][WARN] Plese type the following commands to cleanup & update registries.
+[BRM][WARN] Plese type the following commands to update registries.
 ┌─────────────────────────────────────────────────────────────┐
 │ source /Users/vincent/.zshrc && brew cleanup && brew update │
 └─────────────────────────────────────────────────────────────┘

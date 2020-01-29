@@ -70,7 +70,7 @@ function showList() {
   table.push(['', ...obj].map((s) => s.brightCyan));
   for (let name in registries) {
     const registry = registries[name];
-    const arr = [...Array(obj.length)].map(() => '✖'.brightRed);
+    const arr = [...Array(obj.length)].map(() => '✘'.brightRed);
     for (let item in registry) {
       const url = registry[item];
       const flag = url.trim() === urls[item].trim();
@@ -117,7 +117,7 @@ function onUse(name) {
       arr.forEach((item) => {
         _setRegistry(item, registries[name][item]);
       });
-      _log(`Plese type the following commands to cleanup & update registries.`, MSG_TYPE.WARN);
+      _log(`Plese type the following commands to update registries.`, MSG_TYPE.WARN);
       const table = new Table();
       table.push([`source ${PATH_RCFILE} && brew cleanup && brew update`]);
       console.log(table.toString());
