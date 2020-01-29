@@ -117,10 +117,10 @@ function onUse(name) {
       arr.forEach((item) => {
         _setRegistry(item, registries[name][item]);
       });
-      _log('Cleaning up...');
-      shell.exec('brew cleanup', { silent: true });
-      _log(`Updating registries... Press ${'[CTRL+C]'.bold} to stop.`);
-      shell.exec('brew update');
+      _log(`Plese type the following commands to cleanup & update registries.`, MSG_TYPE.WARN);
+      const table = new Table();
+      table.push([`source ${PATH_RCFILE} && brew cleanup && brew update`]);
+      console.log(table.toString());
     });
 }
 
@@ -256,7 +256,6 @@ function _setRegistry(name, url) {
       fs.writeFileSync(PATH_RCFILE, content);
       shell.env.HOMEBREW_BOTTLE_DOMAIN = url;
       cb(false);
-      // _log('Plese use the following commands to make  ', );
     } catch (err) {
       cb(err);
     }

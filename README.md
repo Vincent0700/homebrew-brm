@@ -73,9 +73,10 @@ $ brm use aliyun
 [BRM] Set brew registry to https://mirrors.aliyun.com/homebrew/brew.git
 [BRM] Set homebrew/core registry to https://mirrors.aliyun.com/homebrew/homebrew-core.git
 [BRM] Set homebrew/bottles registry to https://mirrors.aliyun.com/homebrew/homebrew-bottles
-[BRM] Cleaning up...
-[BRM] Updating registries... Press [CTRL+C] to stop.
-Already up-to-date.
+[BRM][WARN] Plese type the following commands to cleanup & update registries.
+┌─────────────────────────────────────────────────────────────┐
+│ source /Users/vincent/.zshrc && brew cleanup && brew update │
+└─────────────────────────────────────────────────────────────┘
 ```
 
 ### Show current registry and URL
