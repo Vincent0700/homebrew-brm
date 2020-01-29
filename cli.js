@@ -13,7 +13,7 @@ const path = require('path');
 const jf = require('jsonfile');
 const shell = require('shelljs');
 const dns = require('dns');
-const ping = require('net-ping');
+const tcpp = require('tcp-ping');
 const inquirer = require('inquirer');
 const program = require('commander');
 const Table = require('cli-table');
@@ -150,13 +150,9 @@ function onTest(mirror) {
 
   if (list.length > 0) {
     const promises = [];
-    const session = ping.createSession();
-    session.on('error', function() {
-      session.close();
-    });
     _log(`Testing speed of ${list.map((item) => item.mirror.brightCyan).join(', ')}...`);
     list.forEach((item) => {
-      promises.push(_pingHost(session, item.domain));
+      promises.push(_pingHost(item.domain));
     });
     Promise.all(promises).then((result) => {
       for (let i = 0; i < result.length; ++i) {
@@ -319,13 +315,20 @@ function _setRegistry(name, url) {
  * @param {String} domain Domain to test
  * @returns {Promise<Number>} Latency(ms), Number.MAX_SAFE_INTEGER means timeout
  */
-async function _pingHost(session, domain) {
+async function _pingHost(domain) {
+  const TIMEOUT = Number.MAX_SAFE_INTEGER;
   return new Promise((resolve) => {
-    dns.lookup(domain, function(err, ip) {
-      if (err) resolve(Number.MAX_SAFE_INTEGER);
-      session.pingHost(ip, (error, target, sent, rcvd) => {
-        if (error) resolve(Number.MAX_SAFE_INTEGER);
-        resolve(rcvd.getTime() - sent.getTime());
+    dns.lookup(domain, function(err, address) {
+      if (err) resolve(TIMEOUT);
+      tcpp.ping({ address, port: 443, timeout: 3000, attempts: 3 }, (error, data) => {
+        if (error) resolve(TIMEOUT);
+        if (data && data.results && Array.isArray(data.results) && data.results.length > 0) {
+          const latency = data.avg;
+          if (isNaN(latency)) resolve(TIMEOUT);
+          resolve(parseInt(latency));
+        } else {
+          resolve(TIMEOUT);
+        }
       });
     });
   });
