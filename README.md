@@ -44,46 +44,28 @@ Commands:
 
 ```
 $ brm ls
-┌──────────┬───┬──────────────────┬─────────────────────────────────────────────────────────────────────┐
-│ official │   │ brew             │ https://github.com/Homebrew/brew.git                                │
-├──────────┼───┼──────────────────┼─────────────────────────────────────────────────────────────────────┤
-│          │   │ homebrew/core    │ https://github.com/Homebrew/homebrew-core.git                       │
-├──────────┼───┼──────────────────┼─────────────────────────────────────────────────────────────────────┤
-│          │   │ homebrew/cask    │ https://github.com/Homebrew/homebrew-cask.git                       │
-├──────────┼───┼──────────────────┼─────────────────────────────────────────────────────────────────────┤
-│ tsinghua │   │ brew             │ https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/brew.git          │
-├──────────┼───┼──────────────────┼─────────────────────────────────────────────────────────────────────┤
-│          │   │ homebrew/core    │ https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-core.git │
-├──────────┼───┼──────────────────┼─────────────────────────────────────────────────────────────────────┤
-│          │ * │ homebrew/cask    │ https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-cask.git │
-├──────────┼───┼──────────────────┼─────────────────────────────────────────────────────────────────────┤
-│          │   │ homebrew/bottles │ https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles               │
-├──────────┼───┼──────────────────┼─────────────────────────────────────────────────────────────────────┤
-│ aliyun   │ * │ brew             │ https://mirrors.aliyun.com/homebrew/brew.git                        │
-├──────────┼───┼──────────────────┼─────────────────────────────────────────────────────────────────────┤
-│          │ * │ homebrew/core    │ https://mirrors.aliyun.com/homebrew/homebrew-core.git               │
-├──────────┼───┼──────────────────┼─────────────────────────────────────────────────────────────────────┤
-│          │ * │ homebrew/bottles │ https://mirrors.aliyun.com/homebrew/homebrew-bottles                │
-├──────────┼───┼──────────────────┼─────────────────────────────────────────────────────────────────────┤
-│ ustc     │   │ brew             │ https://mirrors.ustc.edu.cn/brew.git                                │
-├──────────┼───┼──────────────────┼─────────────────────────────────────────────────────────────────────┤
-│          │   │ homebrew/core    │ https://mirrors.ustc.edu.cn/homebrew-core.git                       │
-├──────────┼───┼──────────────────┼─────────────────────────────────────────────────────────────────────┤
-│          │   │ homebrew/cask    │ https://mirrors.ustc.edu.cn/homebrew-cask.git                       │
-├──────────┼───┼──────────────────┼─────────────────────────────────────────────────────────────────────┤
-│          │   │ homebrew/bottles │ https://mirrors.ustc.edu.cn/homebrew-bottles                        │
-└──────────┴───┴──────────────────┴─────────────────────────────────────────────────────────────────────┘
+┌──────────┬──────────────────┬──────────────────┬──────────────────┬──────────────────┐
+│          │       brew       │  homebrew/core   │  homebrew/cask   │ homebrew/bottles │
+├──────────┼──────────────────┼──────────────────┼──────────────────┼──────────────────┤
+│ official │        ✔         │        ✔         │        ✔         │        ✔         │
+├──────────┼──────────────────┼──────────────────┼──────────────────┼──────────────────┤
+│ tsinghua │        ✔         │        ✔         │       Use        │        ✔         │
+├──────────┼──────────────────┼──────────────────┼──────────────────┼──────────────────┤
+│ aliyun   │       Use        │       Use        │        ✖         │       Use        │
+├──────────┼──────────────────┼──────────────────┼──────────────────┼──────────────────┤
+│ ustc     │        ✔         │        ✔         │        ✔         │        ✔         │
+└──────────┴──────────────────┴──────────────────┴──────────────────┴──────────────────┘
 ```
 
 ### Change homebrew registry
 
 ```
-$ brm use tsinghua
-? Select registry brew, homebrew/core, homebrew/cask, homebrew/bottles
-Set brew registry to https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/brew.git
-Set homebrew/core registry to https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-core.git
-Set homebrew/cask registry to https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-cask.git
-Set homebrew/bottles registry to https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles
+$ brm use aliyun
+? Select registry brew, homebrew/core, homebrew/bottles
+Set brew registry to https://mirrors.aliyun.com/homebrew/brew.git
+Set homebrew/core registry to https://mirrors.aliyun.com/homebrew/homebrew-core.git
+Set homebrew/bottles registry to https://mirrors.aliyun.com/homebrew/homebrew-bottles
+Cleaning up...
 Updating registries... Press [CTRL+C] to stop.
 Already up-to-date.
 ```
@@ -93,9 +75,9 @@ Already up-to-date.
 ```
 $ brm current
 ┌──────────────────┬──────────┬─────────────────────────────────────────────────────────────────────┐
-│ brew             │ tsinghua │ https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/brew.git          │
+│ brew             │ aliyun   │ https://mirrors.aliyun.com/homebrew/brew.git                        │
 ├──────────────────┼──────────┼─────────────────────────────────────────────────────────────────────┤
-│ homebrew/core    │ tsinghua │ https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-core.git │
+│ homebrew/core    │ aliyun   │ https://mirrors.aliyun.com/homebrew/homebrew-core.git               │
 ├──────────────────┼──────────┼─────────────────────────────────────────────────────────────────────┤
 │ homebrew/cask    │ tsinghua │ https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-cask.git │
 ├──────────────────┼──────────┼─────────────────────────────────────────────────────────────────────┤

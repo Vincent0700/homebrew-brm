@@ -54,22 +54,25 @@ program.parse(process.argv);
 /* ---- ACTION_HANDLERS ---- */
 
 function showList() {
-  const table = new Table();
   const urls = _getCurrentRegistries();
   const obj = ['brew', 'homebrew/core', 'homebrew/cask', 'homebrew/bottles'];
-  table.push(['', ...obj]);
+  const table = new Table({
+    colWidths: [10, 18, 18, 18, 18],
+    colAligns: ['left', 'middle', 'middle', 'middle', 'middle']
+  });
+  table.push(['', ...obj].map((s) => s.brightCyan));
   for (let name in registries) {
     const registry = registries[name];
-    const arr = [...Array(obj.length)].map(() => '');
+    const arr = [...Array(obj.length)].map(() => '✖'.brightRed);
     for (let item in registry) {
       const url = registry[item];
       const flag = url.trim() === urls[item].trim();
       const index = obj.indexOf(item.trim());
-      if (index > 0 && index < arr.length) {
-        arr[index] = flag ? item.bold.brightCyan : item;
+      if (index >= 0 && index < arr.length) {
+        arr[index] = flag ? 'Use'.italic.brightGreen : '✔'.brightGreen;
       }
     }
-    table.push([name.yellow, ...arr]);
+    table.push([name.brightYellow, ...arr]);
   }
   console.log(table.toString());
 }
@@ -77,10 +80,10 @@ function showList() {
 function showCurrent() {
   const table = new Table();
   const urls = _getCurrentRegistries();
-  table.push(['brew'.yellow, _getRegistryName(urls['brew']).brightCyan, urls['brew'].trim()]);
-  table.push(['homebrew/core'.yellow, _getRegistryName(urls['homebrew/core']).brightCyan, urls['homebrew/core'].trim()]);
-  table.push(['homebrew/cask'.yellow, _getRegistryName(urls['homebrew/cask']).brightCyan, urls['homebrew/cask'].trim()]);
-  table.push(['homebrew/bottles'.yellow, _getRegistryName(urls['homebrew/bottles']).brightCyan, urls['homebrew/bottles'].trim()]);
+  table.push(['brew'.brightYellow, _getRegistryName(urls['brew']).brightCyan, urls['brew'].trim()]);
+  table.push(['homebrew/core'.brightYellow, _getRegistryName(urls['homebrew/core']).brightCyan, urls['homebrew/core'].trim()]);
+  table.push(['homebrew/cask'.brightYellow, _getRegistryName(urls['homebrew/cask']).brightCyan, urls['homebrew/cask'].trim()]);
+  table.push(['homebrew/bottles'.brightYellow, _getRegistryName(urls['homebrew/bottles']).brightCyan, urls['homebrew/bottles'].trim()]);
   console.log(table.toString());
 }
 
@@ -106,6 +109,8 @@ function onUse(name) {
       arr.forEach((item) => {
         _setRegistry(item, registries[name][item]);
       });
+      console.log('Cleaning up...');
+      shell.exec('brew cleanup', { silent: true });
       console.log(`Updating registries... Press ${'[CTRL+C]'.bold} to stop.`);
       shell.exec('brew update');
     });
@@ -176,7 +181,7 @@ function _getCurrentRegistries() {
   const brewUrl = shell.exec('git -C $(brew --repo) remote get-url origin', { silent: true }).stdout || '';
   const homebrewCoreUrl = shell.exec('git -C $(brew --repo homebrew/core) remote get-url origin', { silent: true }).stdout || '';
   const homebrewCaskUrl = shell.exec('git -C $(brew --repo homebrew/cask) remote get-url origin', { silent: true }).stdout || '';
-  const homebrewBottlesUrl = process.env.HOMEBREW_BOTTLE_DOMAIN || '';
+  const homebrewBottlesUrl = shell.env.HOMEBREW_BOTTLE_DOMAIN || '';
   return {
     brew: brewUrl,
     'homebrew/core': homebrewCoreUrl,

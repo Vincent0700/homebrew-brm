@@ -2,7 +2,8 @@
     "official": {
         "brew": "https://github.com/Homebrew/brew.git",
         "homebrew/core": "https://github.com/Homebrew/homebrew-core.git",
-        "homebrew/cask": "https://github.com/Homebrew/homebrew-cask.git"
+        "homebrew/cask": "https://github.com/Homebrew/homebrew-cask.git",
+        "homebrew/bottles": ""
     },
     "tsinghua": {
         "brew": "https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/brew.git",
