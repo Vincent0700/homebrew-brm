@@ -101,3 +101,20 @@ $ brm
 [BRM][WARN] Missing dependency - Homebrew
 ? Press <Enter> to install Homebrew? Yes
 ```
+
+### Test mirror speed
+
+```
+$ brm test aliyun
+[BRM] Testing speed of aliyun...
+aliyun ------------------------ 10 ms
+```
+
+```
+$ brm test
+[BRM] Testing speed of official, tsinghua, aliyun, ustc...
+aliyun ------------------------ 18 ms
+tsinghua ---------------------- 33 ms
+ustc -------------------------- 45 ms
+official ---------------------- timeout
+```

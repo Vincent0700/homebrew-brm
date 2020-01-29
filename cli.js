@@ -12,6 +12,8 @@ const fs = require('fs');
 const path = require('path');
 const jf = require('jsonfile');
 const shell = require('shelljs');
+const dns = require('dns');
+const ping = require('net-ping');
 const inquirer = require('inquirer');
 const program = require('commander');
 const Table = require('cli-table');
@@ -23,6 +25,7 @@ const PATH_PKG = path.resolve(__dirname, './package.json');
 const PATH_REGISTRIES = path.resolve(__dirname, './registries.json');
 const PATH_HOME = process.env.HOME;
 const PATH_RCFILE = path.resolve(PATH_HOME, `./.${SHELL}rc`);
+const REG_DOMAIN = /^http[s]?:\/\/(.*?)\//;
 
 const MSG_TYPE = {
   INFO: Symbol(),
@@ -52,6 +55,11 @@ program
   .command('use <registry>')
   .description('Change homebrew registry')
   .action(onUse);
+
+program
+  .command('test [registry]')
+  .description('Show response time for specific or all registries')
+  .action(onTest);
 
 (async function() {
   await _checkDependencies();
@@ -122,6 +130,48 @@ function onUse(name) {
       table.push([`source ${PATH_RCFILE} && brew cleanup && brew update`]);
       console.log(table.toString());
     });
+}
+
+function onTest(mirror) {
+  const list = [];
+  if (mirror) {
+    if (registries[mirror] && registries[mirror]['brew']) {
+      const domain = registries[mirror]['brew'].match(REG_DOMAIN)[1];
+      list.push({ mirror, domain });
+    }
+  } else {
+    for (let mirror in registries) {
+      if (registries[mirror]['brew']) {
+        const domain = registries[mirror]['brew'].match(REG_DOMAIN)[1];
+        list.push({ mirror, domain });
+      }
+    }
+  }
+
+  if (list.length > 0) {
+    const promises = [];
+    const session = ping.createSession();
+    session.on('error', function() {
+      session.close();
+    });
+    _log(`Testing speed of ${list.map((item) => item.mirror.brightCyan).join(', ')}...`);
+    list.forEach((item) => {
+      promises.push(_pingHost(session, item.domain));
+    });
+    Promise.all(promises).then((result) => {
+      for (let i = 0; i < result.length; ++i) {
+        list[i].latency = result[i];
+      }
+      list.sort((a, b) => a.latency - b.latency);
+      const MAX_LEN = 30;
+      for (let i = 0; i < list.length; ++i) {
+        let str = `${list[i].mirror.brightYellow} `;
+        str += [...Array(MAX_LEN - list[i].mirror.length)].map(() => '-').join('') + ' ';
+        str += list[i].latency !== Number.MAX_SAFE_INTEGER ? list[i].latency.toString().brightGreen + ' ms'.bold : 'timeout'.brightRed;
+        console.log(str);
+      }
+    });
+  }
 }
 
 /* ---- PRIVATE_FUNCTIONS ---- */
@@ -260,4 +310,23 @@ function _setRegistry(name, url) {
       cb(err);
     }
   }
+}
+
+/**
+ * @name _pingHost
+ * @description Get network latency
+ * @param {Object} session Ping session
+ * @param {String} domain Domain to test
+ * @returns {Promise<Number>} Latency(ms), Number.MAX_SAFE_INTEGER means timeout
+ */
+async function _pingHost(session, domain) {
+  return new Promise((resolve) => {
+    dns.lookup(domain, function(err, ip) {
+      if (err) resolve(Number.MAX_SAFE_INTEGER);
+      session.pingHost(ip, (error, target, sent, rcvd) => {
+        if (error) resolve(Number.MAX_SAFE_INTEGER);
+        resolve(rcvd.getTime() - sent.getTime());
+      });
+    });
+  });
 }
