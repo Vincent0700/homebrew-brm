@@ -119,3 +119,7 @@ tsinghua ---------------------- 33 ms
 ustc -------------------------- 45 ms
 official ---------------------- timeout
 ```
+
+## 中文文档
+
+[传送门](https://vincentstudio.info/2020/01/29/038_Homebrew_registry_manager/)
