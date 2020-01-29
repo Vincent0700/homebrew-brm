@@ -24,12 +24,16 @@ const PATH_REGISTRIES = path.resolve(__dirname, './registries.json');
 const PATH_HOME = process.env.HOME;
 const PATH_RCFILE = path.resolve(PATH_HOME, `./.${SHELL}rc`);
 
+const MSG_TYPE = {
+  INFO: Symbol(),
+  WARN: Symbol(),
+  ERROR: Symbol()
+};
+
 const pkg = jf.readFileSync(PATH_PKG);
 const registries = jf.readFileSync(PATH_REGISTRIES);
 
 /* ---- CLI ---- */
-
-_checkDependencies();
 
 program.version(pkg.version);
 program.description(pkg.description);
@@ -49,7 +53,10 @@ program
   .description('Change homebrew registry')
   .action(onUse);
 
-program.parse(process.argv);
+(async function() {
+  await _checkDependencies();
+  program.parse(process.argv);
+})();
 
 /* ---- ACTION_HANDLERS ---- */
 
@@ -69,7 +76,7 @@ function showList() {
       const flag = url.trim() === urls[item].trim();
       const index = obj.indexOf(item.trim());
       if (index >= 0 && index < arr.length) {
-        arr[index] = flag ? 'Use'.italic.brightGreen : '✔'.brightGreen;
+        arr[index] = flag ? 'Use'.italic.bold.brightGreen : '✔'.brightGreen;
       }
     }
     table.push([name.brightYellow, ...arr]);
@@ -89,7 +96,8 @@ function showCurrent() {
 
 function onUse(name) {
   if (!Object.keys(registries).includes(name)) {
-    console.log(`\n  Not find registry: ${name.brightCyan}`);
+    _log(`Not find registry: ${name.brightCyan}`, MSG_TYPE.WARN);
+    shell.exit(1);
   }
   inquirer
     .prompt([
@@ -109,14 +117,32 @@ function onUse(name) {
       arr.forEach((item) => {
         _setRegistry(item, registries[name][item]);
       });
-      console.log('Cleaning up...');
+      _log('Cleaning up...');
       shell.exec('brew cleanup', { silent: true });
-      console.log(`Updating registries... Press ${'[CTRL+C]'.bold} to stop.`);
+      _log(`Updating registries... Press ${'[CTRL+C]'.bold} to stop.`);
       shell.exec('brew update');
     });
 }
 
 /* ---- PRIVATE_FUNCTIONS ---- */
+
+/**
+ * @name _log
+ * @description Print log message
+ * @param {String} msg Log message
+ * @param {MSG_TYPE} type Type of log message
+ */
+function _log(msg, type = MSG_TYPE.INFO) {
+  let typeStr = '';
+  if (type === MSG_TYPE.INFO) {
+    typeStr = '[BRM]'.brightGreen;
+  } else if (type === MSG_TYPE.WARN) {
+    typeStr = '[BRM][WARN]'.brightYellow;
+  } else if (type === MSG_TYPE.ERROR) {
+    typeStr = '[BRM][ERROR]'.brightRed;
+  }
+  console.log(`${typeStr} ${msg}`);
+}
 
 /**
  * @name _checkDependencies
@@ -135,23 +161,31 @@ async function _checkDependencies() {
       script: 'brew install git'
     }
   ];
+  let promises = [];
   dependencies.forEach(({ cmd, name, script }) => {
     if (!shell.which(cmd)) {
-      inquirer
-        .prompt({
-          type: 'confirm',
-          name: 'flag',
-          message: `Missing dependency - ${name.brightCyan}. Install it?`,
-          default: true
+      _log(`Missing dependency - ${name.brightCyan}`, MSG_TYPE.WARN);
+      promises.push(
+        new Promise((resolve) => {
+          inquirer
+            .prompt({
+              type: 'confirm',
+              name: 'flag',
+              message: `Press <Enter> to install ${name.brightCyan}?`,
+              default: true
+            })
+            .then(({ flag }) => {
+              if (flag) {
+                shell.exec(script);
+                shell.exit(1);
+              }
+              resolve();
+            });
         })
-        .then(({ flag }) => {
-          if (flag) {
-            shell.exec(script);
-            shell.exit(1);
-          }
-        });
+      );
     }
   });
+  return Promise.all(promises);
 }
 
 /**
@@ -198,8 +232,8 @@ function _getCurrentRegistries() {
  */
 function _setRegistry(name, url) {
   const cb = (err) => {
-    if (err) console.warn(err);
-    else console.log(`Set ${name.brightCyan} registry to ${url.magenta}`);
+    if (err) _log(err, MSG_TYPE.WARN);
+    else _log(`Set ${name.brightCyan} registry to ${url.magenta}`);
   };
   if (name === 'brew') {
     cb(shell.exec(`git -C "$(brew --repo)" remote set-url origin ${url}`, { silent: true }).stderr);
@@ -222,6 +256,7 @@ function _setRegistry(name, url) {
       fs.writeFileSync(PATH_RCFILE, content);
       shell.env.HOMEBREW_BOTTLE_DOMAIN = url;
       cb(false);
+      // _log('Plese use the following commands to make  ', );
     } catch (err) {
       cb(err);
     }

@@ -1,6 +1,6 @@
 {
   "name": "homebrew-brm",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "author": "vincent0700 (https://vincentstudio.info)",
   "email": "wang.yuanqiu007@gmail.com",
   "description": "Homebrew registry manager for macOS",

@@ -61,12 +61,20 @@ $ brm ls
 
 ```
 $ brm use aliyun
+? Select registry (Press <space> to select, <a> to toggle all, <i> to invert selection)
+❯◉ brew
+ ◉ homebrew/core
+ ◉ homebrew/bottles
+```
+
+```
+$ brm use aliyun
 ? Select registry brew, homebrew/core, homebrew/bottles
-Set brew registry to https://mirrors.aliyun.com/homebrew/brew.git
-Set homebrew/core registry to https://mirrors.aliyun.com/homebrew/homebrew-core.git
-Set homebrew/bottles registry to https://mirrors.aliyun.com/homebrew/homebrew-bottles
-Cleaning up...
-Updating registries... Press [CTRL+C] to stop.
+[BRM] Set brew registry to https://mirrors.aliyun.com/homebrew/brew.git
+[BRM] Set homebrew/core registry to https://mirrors.aliyun.com/homebrew/homebrew-core.git
+[BRM] Set homebrew/bottles registry to https://mirrors.aliyun.com/homebrew/homebrew-bottles
+[BRM] Cleaning up...
+[BRM] Updating registries... Press [CTRL+C] to stop.
 Already up-to-date.
 ```
 
@@ -83,4 +91,12 @@ $ brm current
 ├──────────────────┼──────────┼─────────────────────────────────────────────────────────────────────┤
 │ homebrew/bottles │ aliyun   │ https://mirrors.aliyun.com/homebrew/homebrew-bottles                │
 └──────────────────┴──────────┴─────────────────────────────────────────────────────────────────────┘
+```
+
+### Auto install dependencies
+
+```
+$ brm
+[BRM][WARN] Missing dependency - Homebrew
+? Press <Enter> to install Homebrew? Yes
 ```
