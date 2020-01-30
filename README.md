@@ -8,6 +8,8 @@
 
 brm can help you easy and fast switch between different Homebrew registries, now include: official, tsinghua, aliyun, ustc.
 
+![](./demo.gif)
+
 ## Install
 
 ```bash
