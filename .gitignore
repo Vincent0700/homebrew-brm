@@ -1,7 +1,12 @@
 .DS_Store
 
 node_modules/
+.vscode/
 
 *.log
+*.gif
 
-!.vscode/
+.editorconfig
+.eslintignore
+.eslintrc.js
+.prettierrc.js
