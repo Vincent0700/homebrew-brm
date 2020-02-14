@@ -62,6 +62,7 @@ program
   .action(onTest);
 
 (async function() {
+  _updateEnvironment();
   await _checkDependencies();
   program.parse(process.argv);
 })();
@@ -125,10 +126,13 @@ function onUse(name) {
       arr.forEach((item) => {
         _setRegistry(item, registries[name][item]);
       });
-      _log(`Plese type the following commands to update registries.`, MSG_TYPE.WARN);
-      const table = new Table();
-      table.push([`source ${PATH_RCFILE} && brew cleanup && brew update`]);
-      console.log(table.toString());
+      // _log(`Plese type the following commands to update registries.`, MSG_TYPE.WARN);
+      // const table = new Table();
+      // table.push([`source ${PATH_RCFILE} && brew cleanup && brew update`]);
+      // console.log(table.toString());
+      _log(`Execute 'brew cleanup && brew update'.`);
+      shell.exec('brew cleanup && brew update', { silent: true });
+      _log(`Done.`);
     });
 }
 
@@ -293,7 +297,7 @@ function _setRegistry(name, url) {
       let arr = content.split('\n');
       let deleteIndicies = [];
       for (let i = 0; i < arr.length; ++i) {
-        if (arr[i].match(/export[\s]+HOMEBREW_BOTTLE_DOMAIN=[^\S]*/)) deleteIndicies.push(i);
+        if (arr[i].match(/export[\s]+HOMEBREW_BOTTLE_DOMAIN=[\S]*/)) deleteIndicies.push(i);
       }
       deleteIndicies.reverse().forEach((index) => arr.splice(index, 1));
       content = arr.join('\n');
@@ -332,4 +336,15 @@ async function _pingHost(domain) {
       });
     });
   });
+}
+
+/**
+ * @name _updateEnvironment
+ * @description Update environment from rcfile
+ */
+async function _updateEnvironment() {
+  const content = fs.readFileSync(PATH_RCFILE, { encoding: 'utf8' });
+  const match = content.match(/export[\s]+HOMEBREW_BOTTLE_DOMAIN=([\S]*)/);
+  const HOMEBREW_BOTTLE_DOMAIN = match[1] ? match[1] : '';
+  shell.env.HOMEBREW_BOTTLE_DOMAIN = HOMEBREW_BOTTLE_DOMAIN;
 }
