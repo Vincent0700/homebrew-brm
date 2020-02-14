@@ -63,20 +63,24 @@ $ brm ls
 ### Change homebrew registry
 
 ```
-$ brm use aliyun
+$ brm use ustc
 ? Select registry (Press <space> to select, <a> to toggle all, <i> to invert selection)
 ❯◉ brew
  ◉ homebrew/core
+ ◉ homebrew/cask
  ◉ homebrew/bottles
 ```
 
 ```
-$ brm use aliyun
+$ brm use ustc
 ? Select registry brew, homebrew/core, homebrew/bottles
-[BRM] Set brew registry to https://mirrors.aliyun.com/homebrew/brew.git
-[BRM] Set homebrew/core registry to https://mirrors.aliyun.com/homebrew/homebrew-core.git
-[BRM] Set homebrew/bottles registry to https://mirrors.aliyun.com/homebrew/homebrew-bottles
-[BRM] Execute 'brew cleanup && brew update'.
+[BRM] Set brew registry to https://mirrors.ustc.edu.cn/brew.git
+[BRM] Set homebrew/core registry to https://mirrors.ustc.edu.cn/homebrew-core.git
+[BRM] Set homebrew/cask registry to https://mirrors.ustc.edu.cn/homebrew-cask.git
+[BRM] Set homebrew/bottles registry to https://mirrors.ustc.edu.cn/homebrew-bottles
+[BRM] Executing brew cleanup
+[BRM] Executing brew update
+Already up-to-date.
 [BRM] Done.
 ```
 

@@ -126,12 +126,10 @@ function onUse(name) {
       arr.forEach((item) => {
         _setRegistry(item, registries[name][item]);
       });
-      // _log(`Plese type the following commands to update registries.`, MSG_TYPE.WARN);
-      // const table = new Table();
-      // table.push([`source ${PATH_RCFILE} && brew cleanup && brew update`]);
-      // console.log(table.toString());
-      _log(`Execute 'brew cleanup && brew update'.`);
-      shell.exec('brew cleanup && brew update', { silent: true });
+      _log(`Executing ${'brew cleanup'.brightYellow}`);
+      shell.exec('brew cleanup');
+      _log(`Executing ${'brew update'.brightYellow}`);
+      shell.exec('brew update');
       _log(`Done.`);
     });
 }
