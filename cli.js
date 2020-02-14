@@ -345,6 +345,8 @@ async function _pingHost(domain) {
 async function _updateEnvironment() {
   const content = fs.readFileSync(PATH_RCFILE, { encoding: 'utf8' });
   const match = content.match(/export[\s]+HOMEBREW_BOTTLE_DOMAIN=([\S]*)/);
-  const HOMEBREW_BOTTLE_DOMAIN = match[1] ? match[1] : '';
-  shell.env.HOMEBREW_BOTTLE_DOMAIN = HOMEBREW_BOTTLE_DOMAIN;
+  if (match && match.length > 1) {
+    const HOMEBREW_BOTTLE_DOMAIN = match[1];
+    shell.env.HOMEBREW_BOTTLE_DOMAIN = HOMEBREW_BOTTLE_DOMAIN;
+  }
 }
