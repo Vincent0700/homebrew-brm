@@ -10,17 +10,6 @@
     "registries",
     "manager"
   ],
-  "lint-staged": {
-    "*.js": [
-      "eslint --fix",
-      "prettier --write"
-    ]
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
   "bin": {
     "brm": "./cli.js"
   },
