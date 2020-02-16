@@ -3,7 +3,7 @@
 [![NPM](https://nodei.co/npm/homebrew-brm.png?downloads=true&downloadRank=true)](https://www.npmjs.com/package/homebrew-brm)
 
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/vincent0700/homebrew-brm/blob/master/LICENSE)
-[![npm](https://img.shields.io/npm/v/homebrew-brm.svg?style=plastic)](https://www.npmjs.com/package/homebrew-brm)
+[![npm](https://img.shields.io/npm/v/homebrew-brm.svg)](https://www.npmjs.com/package/homebrew-brm)
 [![npm](https://img.shields.io/npm/dm/homebrew-brm.svg)](https://www.npmjs.com/package/homebrew-brm)
 
 brm can help you easy and fast switch between different Homebrew registries, now include: official, tsinghua, aliyun, ustc.
@@ -16,7 +16,7 @@ brm can help you easy and fast switch between different Homebrew registries, now
 $ npm install -g homebrew-brm
 ```
 
-Or 
+Or
 
 ```
 $ yarn global add homebrew-brm
@@ -123,7 +123,3 @@ tsinghua ---------------------- 33 ms
 ustc -------------------------- 45 ms
 official ---------------------- timeout
 ```
-
-## 中文文档
-
-[传送门](https://vincentstudio.info/2020/01/29/038_Homebrew_registry_manager/)
