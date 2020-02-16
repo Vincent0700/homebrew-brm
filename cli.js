@@ -10,7 +10,6 @@
 require('colors');
 const fs = require('fs');
 const path = require('path');
-const jf = require('jsonfile');
 const shell = require('shelljs');
 const dns = require('dns');
 const tcpp = require('tcp-ping');
@@ -33,8 +32,8 @@ const MSG_TYPE = {
   ERROR: Symbol()
 };
 
-const pkg = jf.readFileSync(PATH_PKG);
-const registries = jf.readFileSync(PATH_REGISTRIES);
+const pkg = require(PATH_PKG);
+const registries = require(PATH_REGISTRIES);
 
 /* ---- CLI ---- */
 
