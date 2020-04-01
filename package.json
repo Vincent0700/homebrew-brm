@@ -1,6 +1,6 @@
 {
   "name": "homebrew-brm",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "author": "vincent0700 (https://vincentstudio.info)",
   "email": "wang.yuanqiu007@gmail.com",
   "description": "Homebrew registry manager for macOS",
@@ -10,22 +10,32 @@
     "registries",
     "manager"
   ],
+  "scripts": {
+    "lint": "eslint . --fix",
+    "build": "eslint . --fix && rimraf ./dist && webpack --config ./webpack.config.js && chmod +x ./dist/index.js"
+  },
   "bin": {
-    "brm": "./cli.js"
+    "brm": "./dist/index.js"
   },
   "repository": {
     "url": "git@github.com:Vincent0700/homebrew-brm.git",
     "type": "git"
   },
   "devDependencies": {
+    "@babel/core": "^7.9.0",
+    "@babel/preset-env": "^7.9.0",
     "@commitlint/cli": "^8.3.5",
     "@commitlint/config-conventional": "^8.3.4",
+    "babel-loader": "^8.1.0",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.9.0",
     "eslint-plugin-prettier": "^3.1.2",
     "husky": "^4.2.1",
     "lint-staged": "^10.0.3",
-    "prettier": "^1.19.1"
+    "prettier": "^1.19.1",
+    "rimraf": "^3.0.2",
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.11"
   },
   "dependencies": {
     "cli-table": "^0.3.1",

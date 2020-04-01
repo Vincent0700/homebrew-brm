@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 /**
  * brm (Homebrew Registry Manager)
  * @description https://github.com/Vincent0700/homebrew-brm/blob/master/README.md
@@ -19,21 +17,18 @@ const Table = require('cli-table');
 
 /* ---- PUBLIC VARIABLES ---- */
 
-const SHELL = process.env.SHELL.match(/[^/]+$/)[0].trim();
-const PATH_PKG = path.resolve(__dirname, './package.json');
-const PATH_REGISTRIES = path.resolve(__dirname, './registries.json');
-const PATH_HOME = process.env.HOME;
-const PATH_RCFILE = path.resolve(PATH_HOME, `./.${SHELL}rc`);
 const REG_DOMAIN = /^http[s]?:\/\/(.*?)\//;
+const SHELL = process.env.SHELL.match(/[^/]+$/)[0].trim();
+const PATH_RCFILE = path.resolve(process.env.HOME, `./.${SHELL}rc`);
+
+const pkg = require('./package.json');
+const registries = require('./registries.json');
 
 const MSG_TYPE = {
   INFO: Symbol(),
   WARN: Symbol(),
   ERROR: Symbol()
 };
-
-const pkg = require(PATH_PKG);
-const registries = require(PATH_REGISTRIES);
 
 /* ---- CLI ---- */
 

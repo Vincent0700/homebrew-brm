@@ -1,3 +1,8 @@
 install:
 	npm install
-	npm link
+
+lint:
+	npm run lint
+
+build:
+	npm run build
