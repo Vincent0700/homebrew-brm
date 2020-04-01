@@ -1,6 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
-const BannerPlugin = webpack.BannerPlugin;
+const SpeedMeasurePlugin = require('speed-measure-webpack-plugin');
 
 const externals = (function() {
   const manifest = require('./package.json');
@@ -11,7 +11,7 @@ const externals = (function() {
   return externals;
 })();
 
-module.exports = {
+const config = {
   mode: 'production',
   entry: {
     app: path.resolve(__dirname, './cli.js')
@@ -26,15 +26,17 @@ module.exports = {
     rules: [
       {
         test: /\.js$/,
-        use: ['babel-loader'],
-        exclude: '/node_modules/'
+        use: ['cache-loader', 'babel-loader'],
+        include: [path.resolve(__dirname, './cli.js')]
       }
     ]
   },
   plugins: [
-    new BannerPlugin({
+    new webpack.BannerPlugin({
       banner: '#!/usr/bin/env node\n',
       raw: true
     })
   ]
 };
+
+module.exports = new SpeedMeasurePlugin().wrap(config);
